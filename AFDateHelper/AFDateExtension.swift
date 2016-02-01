@@ -722,8 +722,8 @@ public extension NSDate {
     /**
     A string representation using short date and time style.
     */
-    func toString() -> String {
-        return self.toString(dateStyle: .ShortStyle, timeStyle: .ShortStyle, doesRelativeDateFormatting: false)
+    func toString(timeZone: NSTimeZone = NSTimeZone.localTimeZone()) -> String {
+        return self.toString(dateStyle: .ShortStyle, timeStyle: .ShortStyle, doesRelativeDateFormatting: false, timeZone: timeZone)
     }
     
     /**
@@ -732,7 +732,7 @@ public extension NSDate {
     - Parameter format: The format of date can be .ISO8601(.ISO8601Format?), .DotNet, .RSS, .AltRSS or Custom(FormatString).
     - Returns The date string representation
     */
-    func toString(format format: DateFormat) -> String
+    func toString(format format: DateFormat, timeZone: NSTimeZone = NSTimeZone.localTimeZone()) -> String
     {
         var dateFormat: String
         switch format {
@@ -749,7 +749,7 @@ public extension NSDate {
         case .Custom(let string):
             dateFormat = string
         }
-        let formatter = NSDate.formatter(format: dateFormat)
+        let formatter = NSDate.formatter(format: dateFormat, timeZone: timeZone)
         return formatter.stringFromDate(self)
     }
     
@@ -761,9 +761,9 @@ public extension NSDate {
     - Parameter doesRelativeDateFormatting: Enables relative date formatting.
     - Returns A string representation of the date.
     */
-    func toString(dateStyle dateStyle: NSDateFormatterStyle, timeStyle: NSDateFormatterStyle, doesRelativeDateFormatting: Bool = false) -> String
+    func toString(dateStyle dateStyle: NSDateFormatterStyle, timeStyle: NSDateFormatterStyle, doesRelativeDateFormatting: Bool = false, timeZone: NSTimeZone = NSTimeZone.localTimeZone()) -> String
     {
-        let formatter = NSDate.formatter(dateStyle: dateStyle, timeStyle: timeStyle, doesRelativeDateFormatting: doesRelativeDateFormatting)
+        let formatter = NSDate.formatter(dateStyle: dateStyle, timeStyle: timeStyle, doesRelativeDateFormatting: doesRelativeDateFormatting, timeZone: timeZone)
         return formatter.stringFromDate(self)
     }
     
